@@ -309,7 +309,20 @@ function pjax(options) {
       state: pjax.state,
       previousState: previousState
     })
-    context.html(container.contents)
+	
+	// otpion for replace or append/prepend content to target element
+	console.log(options.contentPosition);
+	switch (options.contentPosition) {
+		case "append":
+			context.append(container.contents);
+			break;
+		case "prepend":
+			context.prepend(container.contents);
+			break;
+		default :
+			context.html(container.contents);
+			break;
+	}
 
     // FF bug: Won't autofocus fields that are inserted via JS.
     // This behavior is incorrect. So if theres no current focus, autofocus
@@ -880,6 +893,7 @@ function enable() {
     dataType: 'html',
     scrollTo: 0,
     maxCacheLength: 20,
+	contentPosition:"replace",
     version: findVersion
   }
   $(window).on('popstate.pjax', onPjaxPopstate)
